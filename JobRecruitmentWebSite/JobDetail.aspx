@@ -97,7 +97,7 @@ else
 
     <title>Chi tiết việc làm</title>
 
-    <link href="Styles.css" rel="stylesheet" />
+    <link href="Styles.css?v=10" rel="stylesheet" />
 
 </head>
 
@@ -128,12 +128,14 @@ else
             ID="lblTitle"
             runat="server" />
     </h2>
+    <div class="job-image-box">
     <asp:Image
-    ID="imgJob"
-    runat="server"
-    Width="450px"
-    Visible="false"
-    Style="border-radius:12px; margin:15px 0; display:block;" />
+        ID="imgJob"
+        runat="server"
+        CssClass="job-image"
+        Visible="false" />
+    </div>
+   
 
     <p style="margin-top:15px;">
 
