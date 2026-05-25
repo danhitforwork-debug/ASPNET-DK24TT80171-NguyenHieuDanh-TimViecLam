@@ -1,4 +1,187 @@
 ﻿<%@ Page Language="C#" %>
-<%@ Import Namespace="System" %><%@ Import Namespace="System.Configuration" %><%@ Import Namespace="System.Data" %><%@ Import Namespace="System.Data.SqlClient" %><%@ Import Namespace="System.Web.UI.WebControls" %>
-<script runat="server">string connStr=ConfigurationManager.ConnectionStrings["JobDb"].ConnectionString;protected void Page_Load(object sender,EventArgs e){if(Session["RoleName"]==null||Session["RoleName"].ToString()!="Admin")Response.Redirect("Login.aspx");if(!IsPostBack)LoadGrid();}void LoadGrid(){using(SqlConnection conn=new SqlConnection(connStr))using(SqlDataAdapter da=new SqlDataAdapter("SELECT a.ApplicationId,j.Title,a.FullName,a.Phone,a.Email,a.CvFile,a.ApplyDate FROM Applications a INNER JOIN Jobs j ON a.JobId=j.JobId ORDER BY a.ApplicationId DESC",conn)){DataTable dt=new DataTable();da.Fill(dt);gvApplications.DataSource=dt;gvApplications.DataBind();}}protected void gvApplications_RowCommand(object sender,GridViewCommandEventArgs e){int rowIndex=Convert.ToInt32(e.CommandArgument);int id=Convert.ToInt32(gvApplications.DataKeys[rowIndex].Value);if(e.CommandName=="DeleteApplication"){using(SqlConnection conn=new SqlConnection(connStr))using(SqlCommand cmd=new SqlCommand("DELETE FROM Applications WHERE ApplicationId=@id",conn)){cmd.Parameters.AddWithValue("@id",id);conn.Open();cmd.ExecuteNonQuery();}lblMsg.Text="Đã xóa hồ sơ.";LoadGrid();}}</script><!DOCTYPE html><html><head runat="server"><title>Hồ sơ ứng tuyển</title><link href="Styles.css" rel="stylesheet" /></head><body><link href="Styles.css" rel="stylesheet" />
-<div class="header"><div><b>Website tuyển dụng việc làm</b></div><div><a href="Default.aspx">Trang chủ</a><a href="Login.aspx">Đăng nhập</a><a href="AdminJobs.aspx">Admin tin</a><a href="AdminApplications.aspx">Hồ sơ</a><a href="Logout.aspx">Thoát</a></div></div><form id="form1" runat="server"><div class="container"><h2>Admin - Quản lý hồ sơ ứng tuyển</h2><p class="msg"><asp:Label ID="lblMsg" runat="server" /></p><asp:GridView ID="gvApplications" runat="server" CssClass="grid" AutoGenerateColumns="False" DataKeyNames="ApplicationId" OnRowCommand="gvApplications_RowCommand"><Columns><asp:BoundField DataField="ApplicationId" HeaderText="ID" /><asp:BoundField DataField="Title" HeaderText="Tin tuyển dụng" /><asp:BoundField DataField="FullName" HeaderText="Họ tên" /><asp:BoundField DataField="Phone" HeaderText="SĐT" /><asp:BoundField DataField="Email" HeaderText="Email" /><asp:HyperLinkField DataNavigateUrlFields="CvFile" DataNavigateUrlFormatString="Uploads/{0}" DataTextField="CvFile" HeaderText="CV" /><asp:BoundField DataField="ApplyDate" HeaderText="Ngày ứng tuyển" /><asp:ButtonField Text="Xóa" CommandName="DeleteApplication" ButtonType="Button" /></Columns></asp:GridView></div></form></body></html>
+
+<%@ Import Namespace="System" %>
+<%@ Import Namespace="System.Configuration" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Import Namespace="System.Data.SqlClient" %>
+<%@ Import Namespace="System.Web.UI.WebControls" %>
+
+<script runat="server">
+
+string connStr =
+    ConfigurationManager.ConnectionStrings["JobDb"].ConnectionString;
+
+protected void Page_Load(object sender, EventArgs e)
+{
+    if (Session["RoleName"] == null ||
+        Session["RoleName"].ToString() != "Admin")
+    {
+        Response.Redirect("Login.aspx");
+    }
+
+    if (!IsPostBack)
+    {
+        LoadGrid();
+    }
+}
+
+void LoadGrid()
+{
+    string sql = @"
+        SELECT
+            a.ApplicationId,
+            j.Title,
+            a.FullName,
+            a.Phone,
+            a.Email,
+            a.CvFile,
+            a.ApplyDate
+        FROM Applications a
+        INNER JOIN Jobs j
+            ON a.JobId = j.JobId
+        ORDER BY a.ApplicationId DESC";
+
+    using (SqlConnection conn = new SqlConnection(connStr))
+    using (SqlDataAdapter da = new SqlDataAdapter(sql, conn))
+    {
+        DataTable dt = new DataTable();
+
+        da.Fill(dt);
+
+        gvApplications.DataSource = dt;
+        gvApplications.DataBind();
+    }
+}
+
+protected void gvApplications_RowCommand(
+    object sender,
+    GridViewCommandEventArgs e)
+{
+    int rowIndex =
+        Convert.ToInt32(e.CommandArgument);
+
+    int id =
+        Convert.ToInt32(
+            gvApplications.DataKeys[rowIndex].Value
+        );
+
+    if (e.CommandName == "DeleteApplication")
+    {
+        using (SqlConnection conn = new SqlConnection(connStr))
+        using (SqlCommand cmd = new SqlCommand(
+            "DELETE FROM Applications WHERE ApplicationId=@id", conn))
+        {
+            cmd.Parameters.AddWithValue("@id", id);
+
+            conn.Open();
+
+            cmd.ExecuteNonQuery();
+        }
+
+        lblMsg.Text = "Đã xóa hồ sơ.";
+
+        LoadGrid();
+    }
+}
+
+</script>
+
+<!DOCTYPE html>
+
+<html>
+
+<head runat="server">
+
+    <title>Hồ sơ ứng tuyển</title>
+
+    <link href="Styles.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <div>
+        <b>Website tìm việc làm</b>
+    </div>
+
+    <div>
+        <a href="Default.aspx">Trang chủ</a>
+        <a href="Login.aspx">Đăng nhập</a>
+        <a href="AdminJobs.aspx">Admin quản lý tuyển dụng</a>
+        <a href="AdminApplications.aspx">Hồ sơ</a>
+        <a href="Logout.aspx">Thoát</a>
+    </div>
+
+</div>
+
+<form id="form1" runat="server">
+
+<div class="container">
+
+    <h2>
+        Admin - Quản lý hồ sơ ứng tuyển
+    </h2>
+
+    <p class="msg">
+        <asp:Label
+            ID="lblMsg"
+            runat="server" />
+    </p>
+
+    <asp:GridView
+        ID="gvApplications"
+        runat="server"
+        CssClass="grid"
+        AutoGenerateColumns="False"
+        DataKeyNames="ApplicationId"
+        OnRowCommand="gvApplications_RowCommand">
+
+        <Columns>
+
+            <asp:BoundField
+                DataField="ApplicationId"
+                HeaderText="ID" />
+
+            <asp:BoundField
+                DataField="Title"
+                HeaderText="Tin tuyển dụng" />
+
+            <asp:BoundField
+                DataField="FullName"
+                HeaderText="Họ tên" />
+
+            <asp:BoundField
+                DataField="Phone"
+                HeaderText="SĐT" />
+
+            <asp:BoundField
+                DataField="Email"
+                HeaderText="Email" />
+
+            <asp:HyperLinkField
+                DataNavigateUrlFields="CvFile"
+                DataNavigateUrlFormatString="Uploads/{0}"
+                DataTextField="CvFile"
+                HeaderText="CV" />
+
+            <asp:BoundField
+                DataField="ApplyDate"
+                HeaderText="Ngày ứng tuyển" />
+
+            <asp:ButtonField
+                Text="Xóa"
+                CommandName="DeleteApplication"
+                ButtonType="Button" />
+
+        </Columns>
+
+    </asp:GridView>
+
+</div>
+
+</form>
+
+</body>
+</html>

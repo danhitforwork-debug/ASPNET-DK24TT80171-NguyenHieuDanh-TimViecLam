@@ -4,12 +4,188 @@
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="System.Data.SqlClient" %>
 <%@ Import Namespace="System.Web.UI.WebControls" %>
+
 <script runat="server">
-string connStr=ConfigurationManager.ConnectionStrings["JobDb"].ConnectionString;
-protected void Page_Load(object sender,EventArgs e){if(!IsPostBack){LoadDropdowns();LoadJobs();}}
-void LoadDropdowns(){LoadDropDown(ddlCategory,"SELECT CategoryId,CategoryName FROM Categories","CategoryName","CategoryId","-- Tất cả ngành nghề --");LoadDropDown(ddlProvince,"SELECT ProvinceId,ProvinceName FROM Provinces","ProvinceName","ProvinceId","-- Tất cả tỉnh/thành --");LoadDropDown(ddlJobType,"SELECT JobTypeId,JobTypeName FROM JobTypes","JobTypeName","JobTypeId","-- Tất cả loại việc --");}
-void LoadDropDown(DropDownList ddl,string sql,string text,string value,string first){using(SqlConnection conn=new SqlConnection(connStr))using(SqlDataAdapter da=new SqlDataAdapter(sql,conn)){DataTable dt=new DataTable();da.Fill(dt);ddl.DataSource=dt;ddl.DataTextField=text;ddl.DataValueField=value;ddl.DataBind();ddl.Items.Insert(0,new ListItem(first,"0"));}}
-protected void btnSearch_Click(object sender,EventArgs e){LoadJobs();}
-void LoadJobs(){string sql=@"SELECT j.JobId,j.Title,j.CompanyName,j.Salary,c.CategoryName,p.ProvinceName,t.JobTypeName FROM Jobs j INNER JOIN Categories c ON j.CategoryId=c.CategoryId INNER JOIN Provinces p ON j.ProvinceId=p.ProvinceId INNER JOIN JobTypes t ON j.JobTypeId=t.JobTypeId WHERE (@kw='' OR j.Title LIKE @kwlike OR j.CompanyName LIKE @kwlike) AND (@cat=0 OR j.CategoryId=@cat) AND (@pro=0 OR j.ProvinceId=@pro) AND (@typ=0 OR j.JobTypeId=@typ) ORDER BY j.JobId DESC";using(SqlConnection conn=new SqlConnection(connStr))using(SqlCommand cmd=new SqlCommand(sql,conn))using(SqlDataAdapter da=new SqlDataAdapter(cmd)){string kw=txtKeyword.Text.Trim();cmd.Parameters.AddWithValue("@kw",kw);cmd.Parameters.AddWithValue("@kwlike","%"+kw+"%");cmd.Parameters.AddWithValue("@cat",int.Parse(ddlCategory.SelectedValue));cmd.Parameters.AddWithValue("@pro",int.Parse(ddlProvince.SelectedValue));cmd.Parameters.AddWithValue("@typ",int.Parse(ddlJobType.SelectedValue));DataTable dt=new DataTable();da.Fill(dt);rptJobs.DataSource=dt;rptJobs.DataBind();}}
-</script><!DOCTYPE html><html><head runat="server"><title>Trang chủ</title><link href="Styles.css" rel="stylesheet" /></head><body><link href="Styles.css" rel="stylesheet" />
-<div class="header"><div><b>Website tuyển dụng việc làm</b></div><div><a href="Default.aspx">Trang chủ</a><a href="Login.aspx">Đăng nhập</a><a href="AdminJobs.aspx">Admin tin</a><a href="AdminApplications.aspx">Hồ sơ</a><a href="Logout.aspx">Thoát</a></div></div><form id="form1" runat="server"><div class="container"><h2>Danh sách việc làm</h2><asp:TextBox ID="txtKeyword" runat="server" Placeholder="Nhập từ khóa..." /><asp:DropDownList ID="ddlCategory" runat="server" /><asp:DropDownList ID="ddlProvince" runat="server" /><asp:DropDownList ID="ddlJobType" runat="server" /><asp:Button ID="btnSearch" runat="server" Text="Tìm kiếm" OnClick="btnSearch_Click" /><hr/><asp:Repeater ID="rptJobs" runat="server"><ItemTemplate><div class="job"><h3><%# Eval("Title") %></h3><p><b>Công ty:</b> <%# Eval("CompanyName") %></p><p><b>Ngành:</b> <%# Eval("CategoryName") %> | <b>Tỉnh/thành:</b> <%# Eval("ProvinceName") %> | <b>Loại:</b> <%# Eval("JobTypeName") %></p><p><b>Lương:</b> <%# Eval("Salary") %></p><a class="btn" href='JobDetail.aspx?id=<%# Eval("JobId") %>'>Xem chi tiết</a> <a class="btn" href='Apply.aspx?id=<%# Eval("JobId") %>'>Ứng tuyển</a></div></ItemTemplate></asp:Repeater></div></form></body></html>
+
+string connStr = ConfigurationManager.ConnectionStrings["JobDb"].ConnectionString;
+
+protected void Page_Load(object sender, EventArgs e)
+{
+    if (!IsPostBack)
+    {
+        LoadDropdowns();
+        LoadJobs();
+    }
+}
+
+void LoadDropdowns()
+{
+    LoadDropDown(ddlCategory, "SELECT CategoryId, CategoryName FROM Categories", "CategoryName", "CategoryId", "-- Tất cả ngành nghề --");
+    LoadDropDown(ddlProvince, "SELECT ProvinceId, ProvinceName FROM Provinces", "ProvinceName", "ProvinceId", "-- Tất cả tỉnh/thành --");
+    LoadDropDown(ddlJobType, "SELECT JobTypeId, JobTypeName FROM JobTypes", "JobTypeName", "JobTypeId", "-- Tất cả loại việc --");
+}
+
+void LoadDropDown(DropDownList ddl, string sql, string text, string value, string first)
+{
+    using (SqlConnection conn = new SqlConnection(connStr))
+    using (SqlDataAdapter da = new SqlDataAdapter(sql, conn))
+    {
+        DataTable dt = new DataTable();
+
+        da.Fill(dt);
+
+        ddl.DataSource = dt;
+        ddl.DataTextField = text;
+        ddl.DataValueField = value;
+        ddl.DataBind();
+
+        ddl.Items.Insert(0, new ListItem(first, "0"));
+    }
+}
+
+protected void btnSearch_Click(object sender, EventArgs e)
+{
+    LoadJobs();
+}
+
+void LoadJobs()
+{
+    string sql = @"
+        SELECT
+            j.JobId,
+            j.Title,
+            j.CompanyName,
+            j.Salary,
+            c.CategoryName,
+            p.ProvinceName,
+            t.JobTypeName
+        FROM Jobs j
+        INNER JOIN Categories c ON j.CategoryId = c.CategoryId
+        INNER JOIN Provinces p ON j.ProvinceId = p.ProvinceId
+        INNER JOIN JobTypes t ON j.JobTypeId = t.JobTypeId
+        WHERE
+            (@kw = '' OR j.Title LIKE @kwlike OR j.CompanyName LIKE @kwlike)
+            AND (@cat = 0 OR j.CategoryId = @cat)
+            AND (@pro = 0 OR j.ProvinceId = @pro)
+            AND (@typ = 0 OR j.JobTypeId = @typ)
+        ORDER BY j.JobId DESC";
+
+    using (SqlConnection conn = new SqlConnection(connStr))
+    using (SqlCommand cmd = new SqlCommand(sql, conn))
+    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+    {
+        string kw = txtKeyword.Text.Trim();
+
+        cmd.Parameters.AddWithValue("@kw", kw);
+        cmd.Parameters.AddWithValue("@kwlike", "%" + kw + "%");
+        cmd.Parameters.AddWithValue("@cat", int.Parse(ddlCategory.SelectedValue));
+        cmd.Parameters.AddWithValue("@pro", int.Parse(ddlProvince.SelectedValue));
+        cmd.Parameters.AddWithValue("@typ", int.Parse(ddlJobType.SelectedValue));
+
+        DataTable dt = new DataTable();
+
+        da.Fill(dt);
+
+        rptJobs.DataSource = dt;
+        rptJobs.DataBind();
+    }
+}
+
+</script>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>Trang chủ</title>
+    <link href="Styles.css" rel="stylesheet" />
+</head>
+
+<body>
+
+<div class="header">
+    <div>
+        <b>Website tìm việc làm</b>
+    </div>
+
+    <div>
+        <a href="Default.aspx">Trang chủ</a>
+        <a href="Login.aspx">Đăng nhập</a>
+        <a href="AdminJobs.aspx">Admin quản lý tuyển dụng</a>
+        <a href="AdminApplications.aspx">Hồ sơ</a>
+        <a href="Logout.aspx">Thoát</a>
+    </div>
+</div>
+
+<form id="form1" runat="server">
+
+<div class="container">
+
+    <h2>Danh sách việc làm</h2>
+
+    <div style="margin-bottom: 20px;">
+        <asp:TextBox
+            ID="txtKeyword"
+            runat="server"
+            Placeholder="Nhập từ khóa..."
+            Width="220px" />
+
+        <asp:DropDownList
+            ID="ddlCategory"
+            runat="server"
+            Width="180px" />
+
+        <asp:DropDownList
+            ID="ddlProvince"
+            runat="server"
+            Width="180px" />
+
+        <asp:DropDownList
+            ID="ddlJobType"
+            runat="server"
+            Width="180px" />
+
+        <asp:Button
+            ID="btnSearch"
+            runat="server"
+            Text="Tìm kiếm"
+            OnClick="btnSearch_Click" />
+    </div>
+
+    <hr />
+
+    <asp:Repeater ID="rptJobs" runat="server">
+        <ItemTemplate>
+            <div class="job">
+                <h3><%# Eval("Title") %></h3>
+
+                <p>
+                    <b>Công ty:</b> <%# Eval("CompanyName") %>
+                </p>
+
+                <p>
+                    <b>Ngành:</b> <%# Eval("CategoryName") %> |
+                    <b>Tỉnh/thành:</b> <%# Eval("ProvinceName") %> |
+                    <b>Loại:</b> <%# Eval("JobTypeName") %>
+                </p>
+
+                <p>
+                    <b>Lương:</b> <%# Eval("Salary") %>
+                </p>
+
+                <a class="btn" href='JobDetail.aspx?id=<%# Eval("JobId") %>'>
+                    Xem chi tiết
+                </a>
+
+                <a class="btn" href='Apply.aspx?id=<%# Eval("JobId") %>'>
+                    Ứng tuyển
+                </a>
+            </div>
+        </ItemTemplate>
+    </asp:Repeater>
+
+</div>
+
+</form>
+
+</body>
+</html>
