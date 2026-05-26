@@ -7,6 +7,22 @@
 <%@ Import Namespace="System.Web.UI.WebControls" %>
 
 <script runat="server">
+    protected void gvApplications_RowDataBound(object sender, GridViewRowEventArgs e)
+{
+    if (e.Row.RowType == DataControlRowType.DataRow)
+    {
+        DropDownList ddl =
+            (DropDownList)e.Row.FindControl("ddlStatus");
+
+        string status =
+            DataBinder.Eval(e.Row.DataItem, "Status").ToString();
+
+        if (ddl.Items.FindByText(status) != null)
+        {
+            ddl.SelectedValue = status;
+        }
+    }
+}
 
 string connStr =
     ConfigurationManager.ConnectionStrings["JobDb"].ConnectionString;
@@ -35,7 +51,8 @@ void LoadGrid()
             a.Phone,
             a.Email,
             a.CvFile,
-            a.ApplyDate
+            a.ApplyDate,
+            a.Status
         FROM Applications a
         INNER JOIN Jobs j
             ON a.JobId = j.JobId
@@ -64,7 +81,42 @@ protected void gvApplications_RowCommand(
         Convert.ToInt32(
             gvApplications.DataKeys[rowIndex].Value
         );
+        if (e.CommandName == "UpdateStatus")
+{
+    GridViewRow row =
+        gvApplications.Rows[
+            Convert.ToInt32(e.CommandArgument)];
 
+    DropDownList ddl =
+        (DropDownList)
+        row.FindControl("ddlStatus");
+
+    using (SqlConnection conn =
+        new SqlConnection(connStr))
+
+    using (SqlCommand cmd =
+        new SqlCommand(
+        "UPDATE Applications SET Status=@s WHERE ApplicationId=@id",
+        conn))
+    {
+        cmd.Parameters.AddWithValue(
+            "@s",
+            ddl.SelectedValue);
+
+        cmd.Parameters.AddWithValue(
+            "@id",
+            id);
+
+        conn.Open();
+
+        cmd.ExecuteNonQuery();
+    }
+
+    lblMsg.Text =
+        "Đã cập nhật trạng thái.";
+
+    LoadGrid();
+}
     if (e.CommandName == "DeleteApplication")
     {
         using (SqlConnection conn = new SqlConnection(connStr))
@@ -136,7 +188,8 @@ protected void gvApplications_RowCommand(
         CssClass="grid"
         AutoGenerateColumns="False"
         DataKeyNames="ApplicationId"
-        OnRowCommand="gvApplications_RowCommand">
+        OnRowCommand="gvApplications_RowCommand"
+        OnRowDataBound="gvApplications_RowDataBound">
 
         <Columns>
 
@@ -169,6 +222,30 @@ protected void gvApplications_RowCommand(
             <asp:BoundField
                 DataField="ApplyDate"
                 HeaderText="Ngày ứng tuyển" />
+
+            <asp:TemplateField HeaderText="Trạng thái">
+
+    <ItemTemplate>
+
+        <asp:DropDownList
+            ID="ddlStatus"
+            runat="server">
+
+            <asp:ListItem>Đang chờ</asp:ListItem>
+            <asp:ListItem>Đã xem</asp:ListItem>
+            <asp:ListItem>Phỏng vấn</asp:ListItem>
+            <asp:ListItem>Trúng tuyển</asp:ListItem>
+            <asp:ListItem>Từ chối</asp:ListItem>
+
+        </asp:DropDownList>
+
+    </ItemTemplate>
+
+</asp:TemplateField>
+            <asp:ButtonField
+                Text="Cập nhật"
+                CommandName="UpdateStatus"
+                ButtonType="Button" />
 
             <asp:ButtonField
                 Text="Xóa"
