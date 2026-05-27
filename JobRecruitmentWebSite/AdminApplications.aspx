@@ -146,7 +146,7 @@ protected void gvApplications_RowCommand(
 
     <title>Hồ sơ ứng tuyển</title>
 
-    <link href="Styles.css" rel="stylesheet" />
+    <link href="Styles.css?v=20" rel="stylesheet" />
 
 </head>
 

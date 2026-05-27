@@ -56,6 +56,7 @@ void LoadJobs()
             j.Title,
             j.CompanyName,
             j.Salary,
+            j.ImageFile,
             c.CategoryName,
             p.ProvinceName,
             t.JobTypeName
@@ -97,7 +98,7 @@ void LoadJobs()
 <html>
 <head runat="server">
     <title>Trang chủ</title>
-    <link href="Styles.css" rel="stylesheet" />
+    <link href="Styles.css?v=20" rel="stylesheet" />
 </head>
 
 <body>
@@ -155,7 +156,8 @@ void LoadJobs()
 
     <asp:Repeater ID="rptJobs" runat="server">
         <ItemTemplate>
-            <div class="job">
+            <div class="job job-row">
+                <div class="job-content">
                 <h3><%# Eval("Title") %></h3>
 
                 <p>
@@ -179,6 +181,16 @@ void LoadJobs()
                 <a class="btn" href='Apply.aspx?id=<%# Eval("JobId") %>'>
                     Ứng tuyển
                 </a>
+            </div>
+                <div class="job-list-image-box">
+                    <asp:Image
+                        ID="imgJobList"
+                        runat="server"
+                        CssClass="job-list-image"
+                        ImageUrl='<%# "Uploads/" + Eval("ImageFile") %>'
+                        Visible='<%# Eval("ImageFile") != DBNull.Value %>' />
+
+                </div>
             </div>
         </ItemTemplate>
     </asp:Repeater>
