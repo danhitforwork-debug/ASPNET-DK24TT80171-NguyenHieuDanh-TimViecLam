@@ -1,17 +1,15 @@
 ﻿body {
     font-family: Arial;
     margin: 0;
-
-    background-image: url('../Backgrounds/123.png');
+    background-image: url('Backgrounds/123.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
 
-/* ===== HEADER ===== */
-
+/* HEADER */
 .header {
-    background: #155eef;
+    background: #16a34a;
     color: white;
     padding: 16px 32px;
     display: flex;
@@ -24,21 +22,26 @@
         margin-left: 14px;
         text-decoration: none;
         font-weight: bold;
+        transition: all 0.25s ease;
+        padding: 8px 10px;
+        border-radius: 8px;
     }
 
-/* ===== CONTAINER ===== */
+        .header a:hover {
+            background: rgba(255,255,255,0.18);
+        }
 
+/* CONTAINER */
 .container {
     max-width: 1100px;
     margin: 24px auto;
-    background: white;
+    background: rgba(255,255,255,0.95);
     padding: 24px;
     border-radius: 12px;
     box-shadow: 0 4px 16px #ccc;
 }
 
-/* ===== INPUT ===== */
-
+/* INPUT */
 input,
 select,
 textarea {
@@ -48,84 +51,55 @@ textarea {
     border-radius: 6px;
 }
 
-    /* ===== BUTTON ===== */
-
+    /* BUTTON */
     .btn,
-    input[type=submit] {
-        background: #155eef;
+    input[type=submit],
+    button,
+    .grid input[type=button] {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
         color: white;
         border: 0;
-        padding: 9px 16px;
-        border-radius: 6px;
+        padding: 10px 18px;
+        border-radius: 10px;
         cursor: pointer;
+        font-weight: bold;
+        transition: all 0.25s ease;
+        box-shadow: 0 4px 10px rgba(34,197,94,0.25);
+        margin-right: 14px;
     }
 
-/* ===== JOB CARD ===== */
+        .btn:hover,
+        input[type=submit]:hover,
+        button:hover,
+        .grid input[type=button]:hover {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(34,197,94,0.35);
+        }
 
+/* JOB CARD TRANG CHỦ */
 .job {
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 16px;
     margin-bottom: 14px;
-
+    min-height: 150px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
+    transition: all 0.25s ease;
 }
 
-/* ===== GRIDVIEW ===== */
-
-.grid {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-    .grid th {
-        background: #155eef;
-        color: white;
+    .job:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        border-color: #16a34a;
     }
 
-    .grid td,
-    .grid th {
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
-
-/* ===== MESSAGE ===== */
-
-.msg {
-    color: #d92d20;
-    font-weight: bold;
+.job-content {
+    flex: 1;
 }
-
-/* ===== LABEL ===== */
-
-label {
-    display: inline-block;
-    width: 120px;
-}
-
-/* ===== JOB IMAGE ===== */
-
-.job-image-box {
-    width: 320px !important;
-    height: 320px !important;
-    overflow: hidden;
-    border-radius: 12px;
-    margin: 15px 0;
-    background: #f1f1f1;
-    border: 1px solid #ddd;
-}
-
-.job-image {
-    width: 320px !important;
-    height: 320px !important;
-    object-fit: cover;
-    display: block;
-}
-
-/* ===== ẢNH JOB TRANG CHỦ ===== */
 
 .job-list-image-box {
     width: 220px;
@@ -135,6 +109,7 @@ label {
     border: 1px solid #ddd;
     background: #f1f1f1;
     flex-shrink: 0;
+    margin-left: auto;
 }
 
 .job-list-image {
@@ -144,6 +119,49 @@ label {
     display: block;
 }
 
-.job-content {
-    flex: 1;
+/* ẢNH TRANG CHI TIẾT */
+.job-image-box {
+    width: 320px;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 12px;
+    margin: 15px 0;
+    background: #f1f1f1;
+    border: 1px solid #ddd;
+}
+
+.job-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* GRIDVIEW */
+.grid {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .grid th {
+        background: #16a34a;
+        color: white;
+    }
+
+    .grid td,
+    .grid th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+/* MESSAGE */
+.msg {
+    color: #d92d20;
+    font-weight: bold;
+}
+
+/* LABEL */
+label {
+    display: inline-block;
+    width: 120px;
 }

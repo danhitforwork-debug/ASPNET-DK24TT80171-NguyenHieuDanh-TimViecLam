@@ -67,7 +67,7 @@ protected void btnLogin_Click(
 
     <title>Đăng nhập</title>
 
-    <link href="Styles.css?v=20" rel="stylesheet" />
+    <link href="Styles.css?v=99" rel="stylesheet" />
 
 </head>
 

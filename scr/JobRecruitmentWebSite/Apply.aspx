@@ -102,7 +102,7 @@ protected void btnApply_Click(object sender, EventArgs e)
 
 <head runat="server">
     <title>Ứng tuyển</title>
-    <link href="Styles.css?v=20" rel="stylesheet" />
+    <link href="Styles.css?v=99" rel="stylesheet" />
 </head>
 
 <body>

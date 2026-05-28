@@ -98,7 +98,7 @@ void LoadJobs()
 <html>
 <head runat="server">
     <title>Trang chủ</title>
-    <link href="Styles.css?v=20" rel="stylesheet" />
+    <link href="Styles.css?v=100" rel="stylesheet" />
 </head>
 
 <body>

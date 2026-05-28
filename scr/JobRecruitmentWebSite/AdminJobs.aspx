@@ -266,7 +266,7 @@ void ClearForm()
 
 <head runat="server">
     <title>Admin quản lý tuyển dụng</title>
-    <link href="Styles.css?v=20" rel="stylesheet" />
+    <link href="Styles.css?v=99" rel="stylesheet" />
 </head>
 
 <body>
