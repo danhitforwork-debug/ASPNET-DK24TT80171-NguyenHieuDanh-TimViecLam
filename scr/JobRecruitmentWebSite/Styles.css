@@ -165,3 +165,18 @@ label {
     display: inline-block;
     width: 120px;
 }
+.grid-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.grid {
+    width: 100%;
+    table-layout: fixed;
+}
+
+    .grid th,
+    .grid td {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }

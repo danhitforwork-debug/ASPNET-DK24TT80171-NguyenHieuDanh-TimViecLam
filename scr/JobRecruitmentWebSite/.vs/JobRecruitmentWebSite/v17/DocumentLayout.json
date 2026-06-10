@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{23CDB0E8-1ED3-6651-1DD8-DCCCB7438A0B}|E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite|e:\\danh\\jobrecuit\\webtimviec\\scr\\jobrecruitmentwebsite\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{23CDB0E8-1ED3-6651-1DD8-DCCCB7438A0B}|E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite|solutionrelative:default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{23CDB0E8-1ED3-6651-1DD8-DCCCB7438A0B}|E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite|E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{23CDB0E8-1ED3-6651-1DD8-DCCCB7438A0B}|E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite|solutionrelative:styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23CDB0E8-1ED3-6651-1DD8-DCCCB7438A0B}|E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite|e:\\danh\\jobrecuit\\webtimviec\\scr\\jobrecruitmentwebsite\\adminapplications.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{23CDB0E8-1ED3-6651-1DD8-DCCCB7438A0B}|E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite|solutionrelative:adminapplications.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23CDB0E8-1ED3-6651-1DD8-DCCCB7438A0B}|E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite|e:\\danh\\jobrecuit\\webtimviec\\scr\\jobrecruitmentwebsite\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{23CDB0E8-1ED3-6651-1DD8-DCCCB7438A0B}|E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite|solutionrelative:default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{23CDB0E8-1ED3-6651-1DD8-DCCCB7438A0B}|E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite|E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite\\apply.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
@@ -22,11 +26,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "AdminApplications.aspx",
+              "DocumentMoniker": "E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite\\AdminApplications.aspx",
+              "RelativeDocumentMoniker": "AdminApplications.aspx",
+              "ToolTip": "E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite\\AdminApplications.aspx",
+              "RelativeToolTip": "AdminApplications.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-06-10T01:07:33.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Default.aspx",
               "DocumentMoniker": "E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite\\Default.aspx",
               "RelativeDocumentMoniker": "Default.aspx",
@@ -39,7 +56,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Apply.aspx",
               "DocumentMoniker": "E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite\\Apply.aspx",
               "RelativeDocumentMoniker": "Apply.aspx",
@@ -51,15 +68,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Styles.css",
               "DocumentMoniker": "E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite\\Styles.css",
               "RelativeDocumentMoniker": "Styles.css",
               "ToolTip": "E:\\Danh\\Jobrecuit\\Webtimviec\\scr\\JobRecruitmentWebSite\\Styles.css",
               "RelativeToolTip": "Styles.css",
-              "ViewState": "AgIAAHgAAAAAAAAAAAAQwIcAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAAKoAAAAAAAAAAAAAwLUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-05-27T02:03:12.364Z"
+              "WhenOpened": "2026-05-27T02:03:12.364Z",
+              "EditorCaption": ""
             }
           ]
         }

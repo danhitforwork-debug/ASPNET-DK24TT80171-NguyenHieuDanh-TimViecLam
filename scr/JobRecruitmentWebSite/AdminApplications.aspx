@@ -181,7 +181,8 @@ protected void gvApplications_RowCommand(
             ID="lblMsg"
             runat="server" />
     </p>
-
+    <div class="grid-wrap">
+        
     <asp:GridView
         ID="gvApplications"
         runat="server"
@@ -216,7 +217,7 @@ protected void gvApplications_RowCommand(
             <asp:HyperLinkField
                 DataNavigateUrlFields="CvFile"
                 DataNavigateUrlFormatString="Uploads/{0}"
-                DataTextField="CvFile"
+                Text="Xem CV"
                 HeaderText="CV" />
 
             <asp:BoundField
@@ -255,7 +256,7 @@ protected void gvApplications_RowCommand(
         </Columns>
 
     </asp:GridView>
-
+    </div>
 </div>
 
 </form>
